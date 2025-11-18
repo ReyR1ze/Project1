@@ -18,10 +18,10 @@ GROUP BY r.region_name;
 cursor.execute(sql_query)
 rows = cursor.fetchall()
 
-# Подключение к Redis
+
 r = redis.Redis(host='localhost', port=6379, db=0)
 
-# Заливка данных в Redis
+
 for row in rows:
     region_name = row[0]
     equipment_count = row[1]
@@ -31,7 +31,7 @@ for row in rows:
         'total_cost': total_cost
     })
 
-# Проверка результатов
+
 for region in r.keys():
     print(f"Region: {region.decode('utf-8')}, Data: {r.hgetall(region)}")
 
